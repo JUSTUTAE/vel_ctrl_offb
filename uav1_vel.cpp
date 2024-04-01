@@ -46,7 +46,7 @@ public:
     {
         ros::Rate rate(5.0);
 
-        double x,y,z,tx,ty,tz,vx,vy,vz=0;
+        double x,y,z=0;
 
         geometry_msgs::TwistStamped setvel;
 
@@ -96,14 +96,10 @@ public:
             x = ref_path_msg.poses[0].pose.position.x-current_pose_msg.pose.position.x;
             y = ref_path_msg.poses[0].pose.position.y-current_pose_msg.pose.position.y-5;
             z = ref_path_msg.poses[0].pose.position.z-current_pose_msg.pose.position.z;
-            
-            vx=(x*kp)+(x*ki/5)+(kd*(x-tx)*5);
-            vy=(y*kp)+(y*ki/5)+(kd*(y-ty)*5);
-            vz=(z*kp)+(z*ki/5)+(kd*(z-tz)*5);
 
-            setvel.twist.linear.x=vx;
-            setvel.twist.linear.y=vy;
-            setvel.twist.linear.z=vz;
+            setvel.twist.linear.x=x;
+            setvel.twist.linear.y=y;
+            setvel.twist.linear.z=z;
             
             set_vel_pub.publish(setvel);
 
